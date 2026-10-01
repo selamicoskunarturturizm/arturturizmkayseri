@@ -1,26 +1,121 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-primary: #D4AF37;
+  --color-primary-hover: #c4a030;
+  --color-primary-light: #F5E6A3;
+  --color-secondary: var(--color-emerald-700);
+  --color-secondary-hover: var(--color-emerald-800);
+  --color-background: #ffffff;
+  --color-surface: var(--color-slate-50);
+
+  --font-sans: "Inter", "sans-serif";
+  --font-serif: "Playfair Display", "serif";
+  --radius-xl: 1rem;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #ffffff;
+    --foreground: var(--color-slate-900);
+    --muted: var(--color-slate-100);
+    --muted-foreground: var(--color-slate-500);
+    --border: var(--color-slate-200);
+    --input: var(--color-slate-200);
+    --ring: var(--color-primary);
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    @apply antialiased selection:bg-primary/20;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-serif);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .glass {
+    @apply bg-white/70 backdrop-blur-md border-b border-slate-200/50;
+  }
+  .text-serif {
+    font-family: var(--font-serif);
+  }
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  .animate-float-slow {
+    animation: float 9s ease-in-out infinite;
+  }
+  .animate-shimmer {
+    background-size: 200% 100%;
+    animation: shimmer 2s linear infinite;
+  }
+  .animate-count {
+    animation: countUp 2s ease-out forwards;
+  }
+  .gradient-gold {
+    background: linear-gradient(135deg, #D4AF37 0%, #F5E6A3 50%, #c4a030 100%);
+  }
+  .gradient-dark {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.7s ease forwards;
+}
+
+.animate-slide-in {
+  animation: slideIn 0.5s ease forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.5s ease forwards;
 }

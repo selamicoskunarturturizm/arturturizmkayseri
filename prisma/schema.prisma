@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Tour {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  description String
+  duration    Int      // Gün sayısı vs.
+  price       Float
+  image_url   String?
+  is_active   Boolean  @default(true)
+  pricing     Json?    // { room2: 1500, room3: 1450, room4: 1400, child: 950, baby: 600 }
+  flights               Json?    // { direction, date, parkur, flightNumber, departureTime, arrivalTime }[]
+  hotels                Json?    // { type: "mekke" | "medine", name, nights, distance, images }[]
+  
+  // Tab Contents
+  tour_program          String?  @db.Text
+  airport_contact       String?  @db.Text
+  mecca_hotel_location  String?  @db.Text
+  medina_hotel_location String?  @db.Text
+
+  capacity    Int      @default(45) // Kontenjan/Müsait yer
+  
+  created_at  DateTime @default(now())
+
+  appointments Appointment[]
+
+  @@map("tours")
+}
+
+model Appointment {
+  id         String   @id @default(cuid())
+  full_name  String
+  phone      String
+  email      String
+  tour_id    String
+  pax        Int      // Kişi sayısı
+  status     String   @default("pending") // pending, contacted
+  
+  // Detaylı rezervasyon bilgileri
+  room_type  String?  // Tek kişilik, Çift kişilik vb.
+  room_count Int?     @default(1)
+  total_price Float?
+  passengers Json?    // { tc, firstName, lastName, dob, phone, email, notes }[]
+  
+  created_at DateTime @default(now())
+
+  tour Tour @relation(fields: [tour_id], references: [id])
+
+  @@map("appointments")
+}
+
+model GalleryImage {
+  id         String   @id @default(cuid())
+  url        String
+  caption    String?
+  category   String?  @default("genel")
+  sort_order Int      @default(0)
+  created_at DateTime @default(now())
+
+  @@map("gallery_images")
+}
