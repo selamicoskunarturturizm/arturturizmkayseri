@@ -73,8 +73,8 @@ export function AppointmentRow({ appointment, onUpdateStatus, onDelete }: { appo
             </span>
           )}
         </td>
-        <td className="px-6 py-4 text-right">
-          <div className="flex justify-end gap-2">
+        <td className="px-6 py-4 text-center">
+          <div className="flex justify-center gap-2">
             <Button onClick={() => setIsModalOpen(true)} variant="outline" size="sm" className="text-blue-600 hover:text-blue-700 hover:bg-blue-50">
               <Eye className="h-4 w-4" />
             </Button>

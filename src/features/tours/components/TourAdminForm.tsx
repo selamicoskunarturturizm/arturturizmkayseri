@@ -206,7 +206,7 @@ export function TourAdminForm({ initialData }: { initialData?: any }) {
         </div>
         <div className="space-y-4">
           {flightFields.map((field, index) => (
-            <div key={field.id} className="grid grid-cols-6 gap-2 items-end border p-4 rounded-lg bg-slate-50 relative">
+            <div key={field.id} className="grid grid-cols-2 md:grid-cols-6 gap-3 items-end border p-4 pt-10 md:pt-4 rounded-lg bg-slate-50 relative">
               <Button type="button" variant="ghost" size="sm" className="absolute top-2 right-2 text-red-500" onClick={() => removeFlight(index)}><Trash2 className="h-4 w-4" /></Button>
               <div><label className="text-xs font-semibold">Yön</label><Input {...register(`flights.${index}.direction`)} placeholder="Gidiş/Dönüş" /></div>
               <div><label className="text-xs font-semibold">Tarih</label><Input {...register(`flights.${index}.date`)} placeholder="15 Ekim..." /></div>
@@ -228,18 +228,18 @@ export function TourAdminForm({ initialData }: { initialData?: any }) {
         </div>
         <div className="space-y-4">
           {hotelFields.map((field, index) => (
-            <div key={field.id} className="grid grid-cols-5 gap-2 items-end border p-4 rounded-lg bg-emerald-50 relative">
+            <div key={field.id} className="grid grid-cols-2 md:grid-cols-5 gap-3 items-end border p-4 pt-10 md:pt-4 rounded-lg bg-emerald-50 relative">
               <Button type="button" variant="ghost" size="sm" className="absolute top-2 right-2 text-red-500" onClick={() => removeHotel(index)}><Trash2 className="h-4 w-4" /></Button>
               <div><label className="text-xs font-semibold">Bölge</label><Input {...register(`hotels.${index}.type`)} placeholder="MEKKE/MEDİNE" /></div>
-              <div><label className="text-xs font-semibold">Otel Adı</label><Input {...register(`hotels.${index}.name`)} placeholder="Al Marwa..." /></div>
+              <div className="col-span-2 md:col-span-1"><label className="text-xs font-semibold">Otel Adı</label><Input {...register(`hotels.${index}.name`)} placeholder="Al Marwa..." /></div>
               <div><label className="text-xs font-semibold">Gece</label><Input type="number" {...register(`hotels.${index}.nights`)} /></div>
               <div><label className="text-xs font-semibold">Mesafe (mt)</label><Input {...register(`hotels.${index}.distance`)} placeholder="50" /></div>
-              <div>
+              <div className="col-span-2 md:col-span-1">
                 <label className="text-xs font-semibold">Görsel</label>
                 <div className="flex items-center gap-1 mt-1">
-                  <div className="relative">
+                  <div className="relative w-full">
                     <Button type="button" variant="outline" size="sm" className="h-8 px-2 w-full text-xs" disabled={uploadingState[`hotels.${index}.image`]}>
-                      {uploadingState[`hotels.${index}.image`] ? ".." : "+ Cihazdan"}
+                      {uploadingState[`hotels.${index}.image`] ? ".." : "+ Cihazdan Seç"}
                     </Button>
                     <input type="file" accept="image/*" onChange={(e) => handleFileUpload(e, `hotels.${index}.image`)} className="absolute inset-0 opacity-0 cursor-pointer w-full" />
                   </div>

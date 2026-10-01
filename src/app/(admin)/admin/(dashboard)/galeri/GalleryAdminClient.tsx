@@ -174,7 +174,7 @@ export function GalleryAdminClient({ initialImages }: { initialImages: GalleryIm
                   </div>
 
                 {/* Overlay actions */}
-                <div className="absolute top-2 right-2 flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="absolute top-2 right-2 flex gap-1.5 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
                   <button
                     onClick={() => handleEdit(img)}
                     className="h-7 w-7 rounded-lg bg-white/90 backdrop-blur-sm flex items-center justify-center shadow hover:bg-white transition-colors"

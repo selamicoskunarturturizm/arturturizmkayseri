@@ -43,15 +43,15 @@ export default async function AdminAppointmentsPage() {
       
       <div className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
-          <table className="w-full text-sm text-left">
+          <table className="w-full text-sm text-center">
             <thead className="bg-slate-50 text-slate-600 font-medium border-b border-slate-200">
               <tr>
-                <th className="px-6 py-4">Tarih</th>
-                <th className="px-6 py-4">Müşteri</th>
-                <th className="px-6 py-4">İletişim</th>
-                <th className="px-6 py-4">Tur & Kişi</th>
-                <th className="px-6 py-4">Durum</th>
-                <th className="px-6 py-4 text-right">İşlem</th>
+                <th className="px-6 py-4 text-center">Tarih</th>
+                <th className="px-6 py-4 text-center">Müşteri</th>
+                <th className="px-6 py-4 text-center">İletişim</th>
+                <th className="px-6 py-4 text-center">Tur & Kişi</th>
+                <th className="px-6 py-4 text-center">Durum</th>
+                <th className="px-6 py-4 text-center">İşlem</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">

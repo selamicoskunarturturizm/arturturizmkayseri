@@ -126,7 +126,7 @@ export default async function HomePage() {
         <div className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-primary/5 blur-3xl z-10" />
 
         {/* Hero Content */}
-        <div className="z-20 text-center px-4 max-w-5xl mx-auto flex flex-col items-center">
+        <div className="z-20 text-center px-4 max-w-5xl mx-auto flex flex-col items-center pb-24">
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 mb-8 shadow-2xl">
             <Star className="h-4 w-4 text-primary" fill="currentColor" />
