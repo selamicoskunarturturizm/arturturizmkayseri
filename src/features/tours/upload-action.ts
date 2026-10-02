@@ -1,7 +1,6 @@
 "use server"
 
-import { writeFile, mkdir } from "fs/promises"
-import { join } from "path"
+import { createClient } from "@/lib/supabase/server"
 
 export async function uploadImageAction(formData: FormData) {
   const file = formData.get("file") as File | null
@@ -9,19 +8,30 @@ export async function uploadImageAction(formData: FormData) {
     return { error: "Dosya bulunamadı." }
   }
 
-  const bytes = await file.arrayBuffer()
-  const buffer = Buffer.from(bytes)
+  const supabase = await createClient()
 
-  const filename = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, '-')}`
-  const uploadDir = join(process.cwd(), "public", "uploads")
-  
+  // Sadece dosya uzantısını al
+  const originalName = file.name
+  const ext = originalName.substring(originalName.lastIndexOf('.'))
+  const filename = `${Date.now()}-${Math.random().toString(36).substring(7)}${ext}`
+
   try {
-    await mkdir(uploadDir, { recursive: true })
-    const path = join(uploadDir, filename)
-    await writeFile(path, buffer)
-    return { url: `/uploads/${filename}` }
+    const { data, error } = await supabase.storage
+      .from('uploads')
+      .upload(`tours/${filename}`, file)
+
+    if (error) {
+      console.error("Supabase Upload Error:", error)
+      return { error: "Dosya Supabase'e kaydedilemedi. ('uploads' adında public bir bucket olduğundan emin olun)" }
+    }
+
+    const { data: { publicUrl } } = supabase.storage
+      .from('uploads')
+      .getPublicUrl(`tours/${filename}`)
+
+    return { url: publicUrl }
   } catch (error) {
     console.error("Error saving file:", error)
-    return { error: "Dosya kaydedilemedi." }
+    return { error: "Sunucu hatası, dosya kaydedilemedi." }
   }
 }

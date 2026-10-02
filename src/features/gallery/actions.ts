@@ -33,17 +33,29 @@ export async function uploadGalleryImage(formData: FormData) {
   ]
   if (!allowedTypes.includes(file.type)) return { error: "Sadece görsel (JPG, PNG vb.) veya video (MP4, WEBM vb.) yükleyebilirsiniz." }
 
-  const bytes = await file.arrayBuffer()
-  const buffer = Buffer.from(bytes)
-  const filename = `gallery-${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, "-")}`
-  const uploadDir = join(process.cwd(), "public", "uploads", "gallery")
+  const { createClient } = await import("@/lib/supabase/server")
+  const supabase = await createClient()
+  
+  const originalName = file.name
+  const ext = originalName.substring(originalName.lastIndexOf('.'))
+  const filename = `gallery-${Date.now()}-${Math.random().toString(36).substring(7)}${ext}`
 
   try {
-    await mkdir(uploadDir, { recursive: true })
-    await writeFile(join(uploadDir, filename), buffer)
-    const url = `/uploads/gallery/${filename}`
+    const { data, error } = await supabase.storage
+      .from('uploads')
+      .upload(`gallery/${filename}`, file)
+
+    if (error) {
+      console.error("Gallery upload error:", error)
+      return { error: "Görsel Supabase'e yüklenemedi. ('uploads' adında public bucket olduğundan emin olun)" }
+    }
+
+    const { data: { publicUrl } } = supabase.storage
+      .from('uploads')
+      .getPublicUrl(`gallery/${filename}`)
+
     const image = await prisma.galleryImage.create({
-      data: { url, caption: caption || null, category },
+      data: { url: publicUrl, caption: caption || null, category },
     })
     revalidatePath("/galeri")
     revalidatePath("/admin/galeri")
@@ -58,10 +70,20 @@ export async function deleteGalleryImage(id: string) {
   try {
     const image = await prisma.galleryImage.findUnique({ where: { id } })
     if (!image) return { error: "Gorsel bulunamadi." }
-    if (image.url.startsWith("/uploads/")) {
-      const filePath = join(process.cwd(), "public", image.url)
-      try { await unlink(filePath) } catch {}
+    
+    // Supabase'den sil (url içinde /uploads/gallery/ varsa)
+    if (image.url.includes('/uploads/gallery/')) {
+      const urlObj = new URL(image.url)
+      const pathParts = urlObj.pathname.split('/uploads/')
+      if (pathParts.length > 1) {
+        const filePath = pathParts[1] // 'gallery/filename.jpg'
+        
+        const { createClient } = await import("@/lib/supabase/server")
+        const supabase = await createClient()
+        await supabase.storage.from('uploads').remove([filePath])
+      }
     }
+    
     await prisma.galleryImage.delete({ where: { id } })
     revalidatePath("/galeri")
     revalidatePath("/admin/galeri")

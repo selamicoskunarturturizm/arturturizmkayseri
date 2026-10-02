@@ -1,7 +1,7 @@
 "use server"
 
 import { prisma } from "@/lib/db"
-import { unstable_noStore as noStore } from "next/cache"
+import { unstable_noStore as noStore, revalidatePath } from "next/cache"
 
 export async function getActiveTours() {
   noStore() // always fetch fresh capacity
@@ -57,6 +57,9 @@ export async function createTour(data: {
         hotels: data.hotels || undefined,
       }
     })
+    revalidatePath("/admin/tours")
+    revalidatePath("/")
+    revalidatePath("/tours")
     return { success: true, tour }
   } catch (error: any) {
     console.error("Error creating tour:", error)
@@ -95,6 +98,10 @@ export async function updateTour(id: string, data: {
         hotels: data.hotels || undefined,
       }
     })
+    revalidatePath("/admin/tours")
+    revalidatePath("/")
+    revalidatePath("/tours")
+    revalidatePath(`/admin/tours/${id}/edit`)
     return { success: true, tour }
   } catch (error: any) {
     console.error("Error updating tour:", error)
