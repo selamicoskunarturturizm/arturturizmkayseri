@@ -7,8 +7,13 @@ export const metadata: Metadata = {
   title: "ARTUR TURİZM KAYSERİ HAC UMRE SELAMİ COŞKUN",
   description: "Kayseri Artur Turizm ve Selami Coşkun rehberliğinde 20 yılı aşkın tecrübeyle Hac ve Umre turları. Diyanet onaylı, güvenilir ve konforlu kutsal yolculuğa adım atın.",
   icons: {
-    icon: "/logo.jpg",
-    apple: "/logo.jpg",
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.png", type: "image/png", sizes: "512x512" },
+    ],
+    apple: [
+      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+    ],
   },
 };
 
