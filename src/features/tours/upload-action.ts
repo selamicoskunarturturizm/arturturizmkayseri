@@ -22,7 +22,7 @@ export async function uploadImageAction(formData: FormData) {
 
     if (error) {
       console.error("Supabase Upload Error:", error)
-      return { error: "Dosya Supabase'e kaydedilemedi. ('uploads' adında public bir bucket olduğundan emin olun)" }
+      return { error: `Dosya kaydedilemedi: ${error.message || "Bilinmeyen depolama hatası"}` }
     }
 
     const { data: { publicUrl } } = supabase.storage
