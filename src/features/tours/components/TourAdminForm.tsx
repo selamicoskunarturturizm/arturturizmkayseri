@@ -105,14 +105,14 @@ export function TourAdminForm({ initialData }: { initialData?: any }) {
       ...data,
       slug: finalSlug,
       duration: Number(data.duration),
-      price: Number(data.duration) === 14 ? 1400 : 1500,
+      price: Number(data.price) || (Number(data.duration) === 14 ? 1400 : 1500),
       capacity: Number(data.capacity || 45),
       pricing: {
-        room2: Number(data.duration) === 14 ? 1500 : 1600,
-        room3: Number(data.duration) === 14 ? 1450 : 1550,
-        room4: Number(data.duration) === 14 ? 1400 : 1500,
-        child: 950,
-        baby: 600,
+        room2: Number(data.pricing?.room2) || (Number(data.duration) === 14 ? 1500 : 1600),
+        room3: Number(data.pricing?.room3) || (Number(data.duration) === 14 ? 1450 : 1550),
+        room4: Number(data.pricing?.room4) || (Number(data.duration) === 14 ? 1400 : 1500),
+        child: Number(data.pricing?.child) || 950,
+        baby: Number(data.pricing?.baby) || 600,
       }
     }
     
@@ -157,6 +157,11 @@ export function TourAdminForm({ initialData }: { initialData?: any }) {
           <Input type="number" {...register("capacity")} defaultValue={45} placeholder="Örn: 45" />
         </div>
         <div>
+          <label className="block text-sm font-medium mb-1">Başlangıç Fiyatı ($ - USD)</label>
+          <Input type="number" step="any" {...register("price")} placeholder="Örn: 1500" />
+          <span className="text-[11px] text-slate-400">Dolar cinsindendir. Ön yüzde ziyaretçilere gösterilmez.</span>
+        </div>
+        <div>
           <label className="block text-sm font-medium mb-1">Ana Görsel</label>
           <div className="flex items-center gap-3">
             <div className="relative inline-block">
@@ -195,7 +200,34 @@ export function TourAdminForm({ initialData }: { initialData?: any }) {
         </div>
       </div>
 
-      {/* Detaylı fiyatlandırma kaldırıldı - Sabit fiyatlar uygulanıyor */}
+      <div className="pt-6 border-t">
+        <h3 className="text-lg font-bold mb-2">Oda Fiyatlandırması ($ - Dolar Bazında)</h3>
+        <p className="text-xs text-slate-500 mb-4">
+          Tüm fiyatlar Dolar ($) cinsindendir. Ön yüzde (web sitesinde) ziyaretçilere hiçbir fiyat gösterilmez; bu alan yalnızca admin ve operasyon kayıtları içindir.
+        </p>
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+          <div>
+            <label className="block text-xs font-semibold text-slate-700 mb-1">2 Kişilik Oda ($)</label>
+            <Input type="number" step="any" {...register("pricing.room2")} placeholder="1500" />
+          </div>
+          <div>
+            <label className="block text-xs font-semibold text-slate-700 mb-1">3 Kişilik Oda ($)</label>
+            <Input type="number" step="any" {...register("pricing.room3")} placeholder="1450" />
+          </div>
+          <div>
+            <label className="block text-xs font-semibold text-slate-700 mb-1">4 Kişilik Oda ($)</label>
+            <Input type="number" step="any" {...register("pricing.room4")} placeholder="1400" />
+          </div>
+          <div>
+            <label className="block text-xs font-semibold text-slate-700 mb-1">Çocuk (2-11) ($)</label>
+            <Input type="number" step="any" {...register("pricing.child")} placeholder="950" />
+          </div>
+          <div>
+            <label className="block text-xs font-semibold text-slate-700 mb-1">Bebek (0-2) ($)</label>
+            <Input type="number" step="any" {...register("pricing.baby")} placeholder="600" />
+          </div>
+        </div>
+      </div>
 
       <div className="pt-6 border-t">
         <div className="flex justify-between items-center mb-4">

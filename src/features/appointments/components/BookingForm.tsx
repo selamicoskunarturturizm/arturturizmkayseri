@@ -210,7 +210,6 @@ export function BookingForm({ tourId, basePrice, duration = 14, pricing }: { tou
             <p><strong>Oda Tercihi:</strong> ${watch("roomCount")} x ${rType} Oda</p>
             <p><strong>Toplam Kişi:</strong> ${totalPax} Yolcu</p>
             <p><strong>İşlem Tarihi:</strong> ${date}</p>
-            <p><strong>Toplam Tutar:</strong> ${totalPrice.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</p>
           </div>
 
           <div class="passengers">
@@ -281,8 +280,8 @@ export function BookingForm({ tourId, basePrice, duration = 14, pricing }: { tou
   return (
     <div className="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden">
       <div className="bg-slate-900 p-4 flex justify-between items-center text-white">
-        <h3 className="font-bold text-lg">Satın Alma Formu</h3>
-        <span className="font-bold text-emerald-400">Güncel Fiyatlama <span className="text-sm font-normal text-slate-400">/ Seçime Göre Değişir</span></span>
+        <h3 className="font-bold text-lg">Ön Kayıt Başvuru Formu</h3>
+        <span className="font-semibold text-emerald-400 text-sm">Resmi Acenta Güvencesi</span>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-8">
@@ -386,7 +385,7 @@ export function BookingForm({ tourId, basePrice, duration = 14, pricing }: { tou
           <div className="flex items-center gap-2">
             <input type="checkbox" id="terms" {...register("termsAccepted")} className="h-4 w-4 text-emerald-600 rounded border-slate-300" />
             <label htmlFor="terms" className="text-sm text-slate-600">
-              <a href="#" className="text-emerald-700 underline font-medium">Umre sözleşmesini</a> ve çocuk fiyatları notunu okudum.
+              <a href="#" className="text-emerald-700 underline font-medium">Umre ve Hac sözleşmesini</a> ve katılım şartlarını okudum.
             </label>
             {errors.termsAccepted && <span className="text-xs text-red-500 ml-2">{errors.termsAccepted.message}</span>}
           </div>

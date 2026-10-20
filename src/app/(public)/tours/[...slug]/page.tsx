@@ -76,30 +76,23 @@ export default async function TourDetailPage({ params }: { params: Promise<{ slu
               </div>
             </div>
 
-            {/* Price card */}
+            {/* Booking & Info card - No price */}
             <div className="lg:col-span-1">
-              {tour.price > 0 ? (
-                <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-6 text-center">
-                  <div className="text-slate-400 text-xs font-semibold uppercase tracking-widest mb-1">Kisi Basi Baslangic</div>
-                  <div className="text-4xl font-extrabold text-transparent bg-clip-text mb-1" style={{ backgroundImage: "linear-gradient(135deg,#D4AF37,#F5E6A3,#c4a030)" }}>
-                    {new Intl.NumberFormat("tr-TR", { style: "currency", currency: "TRY", maximumFractionDigits: 0 }).format(tour.price)}
-                  </div>
-                  <div className="text-slate-500 text-xs mb-5">Oda tipine gore degisebilir</div>
-                  <a href="#rezervasyon" className="block w-full py-3 rounded-2xl font-bold text-white text-sm shadow-xl shadow-primary/30 hover:-translate-y-0.5 transition-all duration-300" style={{ background: "linear-gradient(135deg,#D4AF37,#c4a030)" }}>
-                    Hemen Rezervasyon Yap
-                  </a>
-                  <a href="https://wa.me/905324493823" target="_blank" rel="noopener noreferrer" className="block w-full py-3 mt-2 rounded-2xl font-semibold text-white/80 text-sm bg-white/10 border border-white/10 hover:bg-white/15 transition-all duration-300">
-                    WhatsApp ile Bilgi Al
-                  </a>
+              <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-6 text-center">
+                <div className="text-primary text-xs font-semibold uppercase tracking-widest mb-1">Bilgi & Rezervasyon</div>
+                <div className="text-2xl font-extrabold text-white mb-2">
+                  Özel Program & Ön Kayıt
                 </div>
-              ) : (
-                <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-6 text-center">
-                  <div className="text-slate-300 font-semibold mb-4">Fiyat icin iletisime gecin</div>
-                  <a href="tel:+905324493823" className="block w-full py-3 rounded-2xl font-bold text-white text-sm" style={{ background: "linear-gradient(135deg,#D4AF37,#c4a030)" }}>
-                    +90 532 449 38 23
-                  </a>
+                <div className="text-slate-400 text-xs mb-5 leading-relaxed">
+                  Detaylı tur programı, oda seçenekleri ve kayıt işlemleri için hemen başvurabilir veya bize ulaşabilirsiniz.
                 </div>
-              )}
+                <a href="#rezervasyon" className="block w-full py-3 rounded-2xl font-bold text-white text-sm shadow-xl shadow-primary/30 hover:-translate-y-0.5 transition-all duration-300" style={{ background: "linear-gradient(135deg,#D4AF37,#c4a030)" }}>
+                  Ön Kayıt Oluştur
+                </a>
+                <a href="https://wa.me/905324493823" target="_blank" rel="noopener noreferrer" className="block w-full py-3 mt-2 rounded-2xl font-semibold text-white/80 text-sm bg-white/10 border border-white/10 hover:bg-white/15 transition-all duration-300">
+                  WhatsApp ile Bilgi Al
+                </a>
+              </div>
             </div>
           </div>
         </div>

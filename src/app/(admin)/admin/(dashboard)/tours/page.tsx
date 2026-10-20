@@ -28,7 +28,7 @@ export default async function AdminToursPage() {
               <tr>
                 <th className="px-6 py-4">Tur Adı</th>
                 <th className="px-6 py-4">Süre</th>
-                <th className="px-6 py-4">Fiyat</th>
+                <th className="px-6 py-4">Fiyat ($)</th>
                 <th className="px-6 py-4">Durum</th>
                 <th className="px-6 py-4 text-right">İşlemler</th>
               </tr>
@@ -48,8 +48,8 @@ export default async function AdminToursPage() {
                   <td className="px-6 py-4 text-slate-600">
                     {tour.duration} Gün
                   </td>
-                  <td className="px-6 py-4 text-slate-600">
-                    {tour.price}
+                  <td className="px-6 py-4 text-slate-600 font-medium">
+                    {tour.price ? `$${tour.price}` : "-"}
                   </td>
                   <td className="px-6 py-4">
                     {tour.is_active ? (

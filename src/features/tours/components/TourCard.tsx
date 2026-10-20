@@ -25,13 +25,7 @@ function getTierBadge(title: string) {
   return null
 }
 
-function formatPrice(price: number) {
-  return new Intl.NumberFormat("tr-TR", {
-    style: "currency",
-    currency: "TRY",
-    maximumFractionDigits: 0,
-  }).format(price)
-}
+
 
 export function TourCard({ tour }: TourCardProps) {
   const badge = getTierBadge(tour.title)
@@ -104,27 +98,22 @@ export function TourCard({ tour }: TourCardProps) {
             {tour.description}
           </p>
 
-          {/* Price + CTA */}
+          {/* CTA Info & Button - No price */}
           <div className="mt-auto">
             {/* Separator */}
             <div className="h-px bg-gradient-to-r from-transparent via-slate-100 to-transparent mb-5" />
 
             <div className="flex items-center justify-between">
               <div>
-                {tour.price > 0 ? (
-                  <>
-                    <div className="text-xs text-slate-400 font-medium mb-0.5">Kişi başı fiyat</div>
-                    <div className="text-2xl font-extrabold text-slate-900">
-                      {formatPrice(tour.price)}
-                    </div>
-                  </>
-                ) : (
-                  <div className="text-sm font-semibold text-slate-500">Fiyat için iletişim</div>
-                )}
+                <div className="text-xs text-slate-400 font-medium mb-0.5">Kontenjan Durumu</div>
+                <div className="text-sm font-bold text-emerald-700 flex items-center gap-1.5">
+                  <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+                  Kayıtlar Açık
+                </div>
               </div>
 
               <div className="flex items-center gap-2 text-primary font-bold text-sm group-hover:gap-3 transition-all duration-300">
-                <span>İncele</span>
+                <span>Programı İncele</span>
                 <div className="h-9 w-9 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all duration-300">
                   <ArrowRight className="h-4 w-4" />
                 </div>
